@@ -3,7 +3,6 @@ package AT.MSev.Mango_Tumble.NPCs.Shop;
 import AT.MSev.Mango_Core.Entity.EntityNPC.VillagerNPC;
 import AT.MSev.Mango_Core.Utils.MangoUtils;
 import AT.MSev.Mango_Core.Utils.NMSUtils;
-import AT.MSev.Mango_Tumble.NPCs.Shop.Shops.TestShop;
 import com.earth2me.essentials.Essentials;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import net.minecraft.server.v1_12_R1.World;
@@ -15,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import java.util.UUID;
 
 public class ShopNPC extends VillagerNPC {
-    IShop Shop;
+    String ShopID;
 
     public ShopNPC(World world) {
         super(world);
@@ -23,9 +22,9 @@ public class ShopNPC extends VillagerNPC {
         this.setCustomNameVisible(true);
     }
 
-    public ShopNPC(World world, IShop shop) {
+    public ShopNPC(World world, String shopID) {
         this(world);
-        Shop = shop;
+        ShopID = shopID;
     }
 
     @Override
@@ -33,7 +32,9 @@ public class ShopNPC extends VillagerNPC {
         Boolean result = super.OnInteract(e);
         if(result)
         {
-            e.getPlayer().openInventory(Shop.Shop());
+            e.getPlayer().openInventory(
+                    Shops.GetShop(ShopID).Shop
+            );
         }
         return result;
     }
@@ -45,7 +46,7 @@ public class ShopNPC extends VillagerNPC {
     public void b(NBTTagCompound nbttagcompound) {
         super.b(nbttagcompound);
 
-        nbttagcompound.setString("shopName", Shop.getClass().getName());
+        nbttagcompound.setString("shopID", ShopID);
     }
 
     /*
@@ -54,8 +55,6 @@ public class ShopNPC extends VillagerNPC {
     @Override
     public void a(NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
-        try {
-            Shop = (IShop) Class.forName(nbttagcompound.getString("shopName")).newInstance();
-        } catch (Exception ex) { ex.printStackTrace(); }
+        ShopID = nbttagcompound.getString("shopID");
     }
 }

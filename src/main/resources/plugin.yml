@@ -1,3 +1,7 @@
 name: Mango_Tumble
 version: 1.0
 main: AT.MSev.Mango_Tumble.Mango_Tumble
+commands:
+   quests:
+      description: Shows quests.
+      usage: /quests

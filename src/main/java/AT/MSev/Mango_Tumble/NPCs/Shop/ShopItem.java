@@ -25,8 +25,8 @@ public class ShopItem extends ItemInteractable {
     }
 
     @Override
-    protected void OnInventoryClick(InventoryClickEvent e) {
-        super.OnInventoryClick(e);
+    protected Boolean OnInventoryClick(InventoryClickEvent e) {
+        Boolean result = super.OnInventoryClick(e);
         e.setCancelled(true);
         try {
             Player p = ((Player) e.getWhoClicked());
@@ -46,5 +46,6 @@ public class ShopItem extends ItemInteractable {
                 p.sendMessage("You need " + needed.toString() + " more to buy " + Real.getType().toString());
             }
         } catch (Exception ex) { ex.printStackTrace(); }
+        return result;
     }
 }

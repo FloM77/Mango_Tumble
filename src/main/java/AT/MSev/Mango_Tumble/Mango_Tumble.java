@@ -6,6 +6,8 @@ import AT.MSev.Mango_Core.Utils.NMSUtils;
 import AT.MSev.Mango_Core.Utils.TimedEvent;
 import AT.MSev.Mango_Core.Zones.Interactable.ZoneInteractable;
 import AT.MSev.Mango_Core.Zones.ZoneBase;
+import AT.MSev.Mango_Tumble.Commands.CommandShowQuests;
+import AT.MSev.Mango_Tumble.Items.CustomItemFallDamageTicket;
 import AT.MSev.Mango_Tumble.NPCUtils.CustomItemNPCStick;
 import AT.MSev.Mango_Tumble.NPCs.Quest.QuestHandler;
 import AT.MSev.Mango_Tumble.NPCs.Quest.QuestNPC;
@@ -51,6 +53,8 @@ public class Mango_Tumble extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new Handler(), this);
 
+        this.getCommand("quests").setExecutor(new CommandShowQuests());
+
         QuestHandler.LoadState();
 
         if(!EntitiesLoaded)
@@ -66,5 +70,6 @@ public class Mango_Tumble extends JavaPlugin {
 
     static {
         new CustomItemNPCStick();
+        new CustomItemFallDamageTicket();
     }
 }

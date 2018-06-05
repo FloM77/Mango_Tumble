@@ -8,8 +8,12 @@ public interface IQuest extends ConfigurationSerializable {
     QuestState State();
 
     Player Quester();
+    void SetQuester(Player p);
 
     void Start();
 
     void Complete();
+
+    String Summary();
+    String UniqueID();
 }

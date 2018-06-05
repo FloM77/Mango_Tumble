@@ -1,25 +1,22 @@
 package AT.MSev.Mango_Tumble.NPCs.Quest;
 
 import AT.MSev.Mango_Core.Entity.EntityNPC.VillagerNPC;
-import AT.MSev.Mango_Tumble.NPCs.Quest.Quests.KillQuest;
-import AT.MSev.Mango_Tumble.NPCs.Shop.IShop;
-import AT.MSev.Mango_Tumble.NPCs.Shop.Shops.TestShop;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 public class QuestNPC extends VillagerNPC {
 
-    IQuestInstance Quest;
+    String QuestID;
     public QuestNPC(World world) {
         super(world);
         this.setCustomName("Quest");
         this.setCustomNameVisible(true);
     }
 
-    public QuestNPC(World world, IQuestInstance quest) {
+    public QuestNPC(World world, String questID) {
         this(world);
-        Quest = quest;
+        QuestID = questID;
     }
 
 
@@ -28,7 +25,9 @@ public class QuestNPC extends VillagerNPC {
         Boolean result = super.OnInteract(e);
         if(result)
         {
-            Quest.StartQuest(e.getPlayer());
+            QuestHandler.StartQuest(e.getPlayer(),
+                    QuestHandler.GetQuest(QuestID)
+                    );
         }
         return result;
     }
@@ -40,7 +39,7 @@ public class QuestNPC extends VillagerNPC {
     public void b(NBTTagCompound nbttagcompound) {
         super.b(nbttagcompound);
 
-        nbttagcompound.setString("questName", Quest.getClass().getName());
+        nbttagcompound.setString("questID", QuestID);
     }
 
     /*
@@ -49,8 +48,6 @@ public class QuestNPC extends VillagerNPC {
     @Override
     public void a(NBTTagCompound nbttagcompound) {
         super.a(nbttagcompound);
-        try {
-            Quest = (IQuestInstance) Class.forName(nbttagcompound.getString("questName")).newInstance();
-        } catch (Exception ex) { ex.printStackTrace(); }
+        QuestID = nbttagcompound.getString("questID");
     }
 }

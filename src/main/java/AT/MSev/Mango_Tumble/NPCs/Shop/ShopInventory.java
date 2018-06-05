@@ -6,10 +6,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class ShopInventory {
     public Inventory Shop;
+    String UniqueID = "noid";
 
-    public ShopInventory(int size, String name)
+    public ShopInventory(int size, String name, String shopID)
     {
         Shop = Bukkit.createInventory(null, size, name);
+        UniqueID = shopID;
     }
 
     public void AddItem(ItemStack... item)

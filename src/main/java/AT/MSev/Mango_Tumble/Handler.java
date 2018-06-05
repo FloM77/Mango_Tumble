@@ -16,7 +16,8 @@ public class Handler implements Listener {
         Player p = e.getPlayer();
         if(p.getDisplayName().equalsIgnoreCase("Flomich"))
         {
-            ItemBase.Get("SpawnStick").Give(p, true);
+            ItemBase.Get("SpawnStick").Give(p, true, 1);
+            ItemBase.Get("FallDamageTicket").Give(p, true, 5);
         }
     }
 }

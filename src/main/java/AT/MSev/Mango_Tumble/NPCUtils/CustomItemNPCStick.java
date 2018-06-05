@@ -1,8 +1,12 @@
 package AT.MSev.Mango_Tumble.NPCUtils;
 
 import AT.MSev.Mango_Core.Items.Interactable.ItemInteractable;
+import AT.MSev.Mango_Tumble.NPCs.Quest.IQuest;
 import AT.MSev.Mango_Tumble.NPCs.Quest.QuestNPC;
+import AT.MSev.Mango_Tumble.NPCs.Quest.Quests.KillQuest;
+import AT.MSev.Mango_Tumble.NPCs.Quest.Quests.KillQuests.Zombie4;
 import AT.MSev.Mango_Tumble.NPCs.Shop.ShopNPC;
+import AT.MSev.Mango_Tumble.NPCs.Shop.Shops.TestShop;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
@@ -23,8 +27,12 @@ public class CustomItemNPCStick extends ItemInteractable {
             if(e.getClickedBlock()!=null)
             {
                 Location location = e.getClickedBlock().getLocation();
-                new ShopNPC(((CraftWorld)location.getWorld()).getHandle()).Spawn(location.clone().add(0,1,0));
-                new QuestNPC(((CraftWorld)location.getWorld()).getHandle()).Spawn(location.clone().add(4,1,0));
+                new ShopNPC(((CraftWorld)location.getWorld()).getHandle(),
+                        new TestShop()
+                        ).Spawn(location.clone().add(0,1,0));
+                new QuestNPC(((CraftWorld)location.getWorld()).getHandle(),
+                        new Zombie4()
+                        ).Spawn(location.clone().add(4,1,0));
             }
         }
         return result;

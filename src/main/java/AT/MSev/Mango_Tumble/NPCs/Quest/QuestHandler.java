@@ -3,6 +3,8 @@ package AT.MSev.Mango_Tumble.NPCs.Quest;
 import AT.MSev.Mango_Tumble.Mango_Tumble;
 import AT.MSev.Mango_Tumble.NPCs.Quest.Quests.KillQuest;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
@@ -36,7 +38,13 @@ public class QuestHandler {
 
     public static void LoadState()
     {
-        PlayerQuests = (HashMap<String, ArrayList<IQuest>>) Mango_Tumble.plugin.getConfig().getConfigurationSection("QuestMap");
+        ConfigurationSection playerQuests = Mango_Tumble.plugin.getConfig().getConfigurationSection("QuestMap");
+        if(playerQuests==null) return;
+        HashMap<String, ArrayList<IQuest>> temp = new HashMap<String, ArrayList<IQuest>>();
+        for(String inv : playerQuests.getKeys(false)) {
+            temp.put(inv, (ArrayList<IQuest>) playerQuests.get(inv));
+        }
+        PlayerQuests = temp;
     }
 }
 

@@ -1,9 +1,15 @@
 package AT.MSev.Mango_Tumble;
 
+import AT.MSev.Mango_Core.Blocks.BlockInstance;
 import AT.MSev.Mango_Core.Entity.EntityNPC.VillagerNPC;
 import AT.MSev.Mango_Core.Utils.NMSUtils;
+import AT.MSev.Mango_Core.Utils.TimedEvent;
+import AT.MSev.Mango_Core.Zones.Interactable.ZoneInteractable;
+import AT.MSev.Mango_Core.Zones.ZoneBase;
 import AT.MSev.Mango_Tumble.NPCUtils.CustomItemNPCStick;
+import AT.MSev.Mango_Tumble.NPCs.Quest.QuestHandler;
 import AT.MSev.Mango_Tumble.NPCs.Quest.QuestNPC;
+import AT.MSev.Mango_Tumble.NPCs.Quest.Quests.KillQuest;
 import AT.MSev.Mango_Tumble.NPCs.Shop.ShopNPC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,6 +31,10 @@ public class Mango_Tumble extends JavaPlugin {
         NMSUtils.registerEntity("npc_quest", NMSUtils.Type.VILLAGER, QuestNPC.class, false);
     }
 
+    static {
+        ConfigurationSerialization.registerClass(KillQuest.class, "KillQuest");
+    }
+
     @Override
     public void onLoad()
     {
@@ -40,6 +50,8 @@ public class Mango_Tumble extends JavaPlugin {
         key = new NamespacedKey(this, this.getDescription().getName());
 
         getServer().getPluginManager().registerEvents(new Handler(), this);
+
+        QuestHandler.LoadState();
 
         if(!EntitiesLoaded)
         {
